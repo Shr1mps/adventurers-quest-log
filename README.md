@@ -33,9 +33,6 @@ AQL provides a robust system for managing quests, tracking objectives, and rewar
 *   **Sub Quests**: Support for branching narratives and complex quest chains.
 *   **Search & Sort**: Easily find quests with search and sorting options.
 
-### Translations
-
-AQL supports multiple languages thanks to community contributors. If you'd like to contribute, please visit our [Weblate Portal](https://hosted.weblate.org/projects/foriens-quest-log/).
 
 ## Issues
 
@@ -48,5 +45,4 @@ This package is under an [MIT](LICENSE) license and the [Foundry Virtual Tableto
 ## Acknowledgements
 
 -   Original module by **Forien**.
--   Previously maintained by **Michael Leahy (TyphonJS)**.
 -   Currently maintained by **Shr1mps**.
