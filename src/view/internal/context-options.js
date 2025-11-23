@@ -27,7 +27,7 @@ function getQuestFromElement(element)
 }
 
 export const menuItemCopyLink = {
-   name: 'ForienQuestLog.QuestLog.ContextMenu.CopyEntityLink',
+   name: 'AdventurersQuestLog.QuestLog.ContextMenu.CopyEntityLink',
    icon: '<i class="fas fa-link"></i>',
    callback: async (menu) =>
    {
@@ -35,13 +35,13 @@ export const menuItemCopyLink = {
 
       if (quest && await Utils.copyTextToClipboard(`@JournalEntry[${quest.id}]{${quest.name}}`))
       {
-         ui.notifications.info(game.i18n.format('ForienQuestLog.Notifications.LinkCopied'));
+         ui.notifications.info(game.i18n.format('AdventurersQuestLog.Notifications.LinkCopied'));
       }
    }
 };
 
 export const copyQuestId = {
-   name: 'ForienQuestLog.QuestLog.ContextMenu.CopyQuestID',
+   name: 'AdventurersQuestLog.QuestLog.ContextMenu.CopyQuestID',
    icon: '<i class="fas fa-key"></i>',
    callback: async (menu) =>
    {
@@ -49,13 +49,13 @@ export const copyQuestId = {
 
       if (quest && await Utils.copyTextToClipboard(quest.id))
       {
-         ui.notifications.info(game.i18n.format('ForienQuestLog.Notifications.QuestIDCopied'));
+         ui.notifications.info(game.i18n.format('AdventurersQuestLog.Notifications.QuestIDCopied'));
       }
    }
 };
 
 export const togglePrimaryQuest = {
-   name: 'ForienQuestLog.QuestLog.ContextMenu.PrimaryQuest',
+   name: 'AdventurersQuestLog.QuestLog.ContextMenu.PrimaryQuest',
    icon: '<i class="fas fa-star"></i>',
    callback: (menu) =>
    {

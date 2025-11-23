@@ -1,16 +1,16 @@
 /**
- * Defines the main FQL constants for module name and the DB flag.
+ * Defines the main AQL constants for module name and the DB flag.
  *
  * @type {{folderState: string, flagDB: string, moduleName: string, moduleLabel: string, primaryState: string}}
  */
 const constants = {
-   moduleName: 'forien-quest-log',
-   moduleLabel: `Forien's Quest Log`,
+   moduleName: 'adventurers-quest-log',
+   moduleLabel: `Adventurer's Quest Log`,
    flagDB: 'json'
 };
 
 /**
- * Defines the {@link JQuery} events that are used in FQL.
+ * Defines the {@link JQuery} events that are used in AQL.
  *
  * @type {{click: string, dblclick: string, dragstart: string, drop: string, focus: string, focusout: string, mousedown: string}}
  */
@@ -45,11 +45,11 @@ const questStatus = {
  * @type {{active: string, available: string, completed: string, failed: string, inactive: string}}
  */
 const questStatusI18n = {
-   active: 'ForienQuestLog.QuestTypes.Labels.Active',
-   available: 'ForienQuestLog.QuestTypes.Labels.Available',
-   completed: 'ForienQuestLog.QuestTypes.Labels.Completed',
-   failed: 'ForienQuestLog.QuestTypes.Labels.Failed',
-   inactive: 'ForienQuestLog.QuestTypes.Labels.InActive'
+   active: 'AdventurersQuestLog.QuestTypes.Labels.Active',
+   available: 'AdventurersQuestLog.QuestTypes.Labels.Available',
+   completed: 'AdventurersQuestLog.QuestTypes.Labels.Completed',
+   failed: 'AdventurersQuestLog.QuestTypes.Labels.Failed',
+   inactive: 'AdventurersQuestLog.QuestTypes.Labels.InActive'
 };
 
 /**
@@ -69,17 +69,17 @@ const questTabIndex = {
 /**
  * Stores the keys used with session storage.
  *
- * @type {FQLSessionConstants}
+ * @type {AQLSessionConstants}
  */
 const sessionConstants = {
-   currentPrimaryQuest: 'forien.questlog.currentPrimaryQuest',
-   trackerFolderState: 'forien.questtracker.folderState-',
-   trackerShowBackground: 'forien.questtracker.showBackground',
-   trackerShowPrimary: 'forien.questtracker.showPrimary'
+   currentPrimaryQuest: 'adventurers.questlog.currentPrimaryQuest',
+   trackerFolderState: 'adventurers.questtracker.folderState-',
+   trackerShowBackground: 'adventurers.questtracker.showBackground',
+   trackerShowPrimary: 'adventurers.questtracker.showPrimary'
 };
 
 /**
- * @type {FQLSettings} Defines all the module settings for world and client.
+ * @type {AQLSettings} Defines all the module settings for world and client.
  */
 const settings = {
    allowPlayersAccept: 'allowPlayersAccept',
@@ -89,7 +89,7 @@ const settings = {
    defaultAbstractRewardImage: 'defaultAbstractRewardImage',
    defaultPermission: 'defaultPermission',
    dynamicBookmarkBackground: 'dynamicBookmarkBackground',
-   hideFQLFromPlayers: 'hideFQLFromPlayers',
+   hideAQLFromPlayers: 'hideAQLFromPlayers',
    navStyle: 'navStyle',
    notifyRewardDrop: 'notifyRewardDrop',
    primaryQuest: 'primaryQuest',
@@ -103,7 +103,7 @@ const settings = {
 };
 
 /**
- * @type {FQLKeybindings} Defines all the module keybindings for world and client.
+ * @type {AQLKeybindings} Defines all the module keybindings for world and client.
  */
 const keybindings = {
    openQuestLog: 'openQuestLog',
@@ -114,9 +114,9 @@ const keybindings = {
 export { constants, jquery, questStatus, questStatusI18n, questTabIndex, sessionConstants, settings, keybindings };
 
 /**
- * @typedef {object} FQLSessionConstants
+ * @typedef {object} AQLSessionConstants
  *
- * @property {string}   currentPrimaryQuest - Stores current primary quest set from {@link FQLSettings.primaryQuest}.
+ * @property {string}   currentPrimaryQuest - Stores current primary quest set from {@link AQLSettings.primaryQuest}.
  *
  * @property {string}   trackerFolderState - Stores a boolean with tacked on quest ID for whether objectives are shown.
  *
@@ -126,7 +126,7 @@ export { constants, jquery, questStatus, questStatusI18n, questTabIndex, session
  */
 
 /**
- * @typedef {object} FQLSettings
+ * @typedef {object} AQLSettings
  *
  * @property {string}   allowPlayersAccept - Allow players to accept quests.
  *
@@ -142,7 +142,7 @@ export { constants, jquery, questStatus, questStatusI18n, questTabIndex, session
  *
  * @property {string}   dynamicBookmarkBackground - Uses jQuery to dynamically set the tab background image.
  *
- * @property {string}   hideFQLFromPlayers - Completely hides FQL from players.
+ * @property {string}   hideAQLFromPlayers - Completely hides AQL from players.
  *
  * @property {string}   navStyle - Navigation style / classic / or bookmark tabs.
  *
@@ -166,7 +166,7 @@ export { constants, jquery, questStatus, questStatusI18n, questTabIndex, session
  */
 
 /**
- * @typedef {object} FQLKeybindings
+ * @typedef {object} AQLKeybindings
  *
  * @property {string}   openQuestLog - Press to open Quest Log.
  *

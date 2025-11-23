@@ -116,8 +116,8 @@ export class HandlerTracker
       const showPrimaryIcon = $('#quest-tracker .header-button.show-primary i');
       showPrimaryIcon.attr('class', newPrimary ? 'fas fa-star' : 'far fa-star');
       showPrimaryIcon.attr('title', game.i18n.localize(newPrimary ?
-       'ForienQuestLog.QuestTracker.Tooltips.PrimaryQuestShow' :
-        'ForienQuestLog.QuestTracker.Tooltips.PrimaryQuestUnshow'));
+       'AdventurersQuestLog.QuestTracker.Tooltips.PrimaryQuestShow' :
+        'AdventurersQuestLog.QuestTracker.Tooltips.PrimaryQuestUnshow'));
 
       questTracker.render();
    }
@@ -166,8 +166,8 @@ export class HandlerTracker
       const showBackgroundIcon = $('#quest-tracker .header-button.show-background i');
       showBackgroundIcon.attr('class', newBackgroundState ? 'fas fa-star' : 'far fa-star');
       showBackgroundIcon.attr('title', game.i18n.localize(newBackgroundState ?
-       'ForienQuestLog.QuestTracker.Tooltips.BackgroundUnshow' :
-        'ForienQuestLog.QuestTracker.Tooltips.BackgroundShow'));
+       'AdventurersQuestLog.QuestTracker.Tooltips.BackgroundUnshow' :
+        'AdventurersQuestLog.QuestTracker.Tooltips.BackgroundShow'));
 
       questTracker.render();
    }

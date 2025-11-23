@@ -13,13 +13,13 @@ import {
 
 /**
  * Provides a basic Socket.io implementation to send events between all connected clients. The various methods have
- * at as local and remote control mostly of GUI related actions. FQL appears to be a reactive application, but it really
+ * at as local and remote control mostly of GUI related actions. AQL appears to be a reactive application, but it really
  * is Socket doing a lot of the heavy lifting to notify clients that particular GUI apps need to be refreshed when the
  * underlying Quest data changes.
  *
  * There are also various actions that require a GM or trusted played with edit capability to act upon mostly moving
  * quests from one status to another. Reward item drops into actor sheets invokes {@link Socket.questRewardDrop} from
- * the {@link FQLHooks.dropActorSheetData} hook, but at least one GM level user must be logged in to receive this
+ * the {@link AQLHooks.dropActorSheetData} hook, but at least one GM level user must be logged in to receive this
  * message to perform the drop / removal of the reward from a Quest.
  *
  * Please see the following view control classes and the QuestDB for socket related usage:
@@ -37,10 +37,10 @@ export class Socket
     *
     * @type {string}
     */
-   static #eventName = 'module.forien-quest-log';
+   static #eventName = 'module.adventurers-quest-log';
 
    /**
-    * Defines the different message types that FQL sends over `game.socket`.
+    * Defines the different message types that AQL sends over `game.socket`.
     */
    static #messageTypes = {
       deletedQuest: 'deletedQuest',
@@ -111,7 +111,7 @@ export class Socket
    }
 
    /**
-    * Handles the reward drop in actor sheet action from the {@link FQLHooks.dropActorSheetData} hook. If the local user
+    * Handles the reward drop in actor sheet action from the {@link AQLHooks.dropActorSheetData} hook. If the local user
     * is a GM handle this action right away otherwise send a message across the wire for the first GM user reached to
     * handle the action remotely. The reward is removed from the associated quest.
     *
@@ -129,9 +129,9 @@ export class Socket
       if (game.user.isGM)
       {
          /**
-          * @type {FQLDropData}
+          * @type {AQLDropData}
           */
-         const fqlData = data.data._fqlData;
+         const fqlData = data.data._aqlData;
 
          const quest = QuestDB.getQuest(fqlData.questId);
          if (quest)
@@ -187,19 +187,6 @@ export class Socket
     *
     * @param {object}            opts - Optional parameters.
     *
-    * @param {string|string[]}   opts.questId - A single quest ID or an array of IDs to update.
-    *
-    * @param {boolean}           [opts.updateLog=true] - Updates the quest log and all other GUI apps if true.
-    *
-    * @param {...RenderOptions}  [opts.options] - Any options to pass onto QuestPreview render method invocation.
-    */
-   static refreshQuestPreview({ questId, updateLog = true, ...options })
-   {
-      // QuestDB Journal update hook is now async, so schedule on next microtask so local display is correct.
-      setTimeout(() => ViewManager.refreshQuestPreview(questId, options), 10);
-
-      // Send a socket message for remote clients to render.
-      game.socket.emit(this.#eventName, {
          type: this.#messageTypes.refreshQuestPreview,
          payload: {
             questId,
@@ -312,7 +299,7 @@ export class Socket
          Socket.refreshAll();
 
          const dirname = game.i18n.localize(questStatusI18n[target]);
-         ViewManager.notifications.info(game.i18n.format('ForienQuestLog.Notifications.QuestMoved',
+         ViewManager.notifications.info(game.i18n.format('AdventurersQuestLog.Notifications.QuestMoved',
           { name: quest.name, target: dirname }));
       }
       else
@@ -469,16 +456,16 @@ export class Socket
       if (game.user.isGM)
       {
          /**
-          * @type {FQLDropData}
+          * @type {AQLDropData}
           */
-         const fqlData = data.payload.data._fqlData;
+         const fqlData = data.payload.data._aqlData;
 
          // Notify the GM that a user has dropped a reward item into an actor sheet.
          const notify = game.settings.get(constants.moduleName, settings.notifyRewardDrop);
 
          if (notify)
          {
-            ViewManager.notifications.info(game.i18n.format('ForienQuestLog.API.Socket.Notifications.RewardDrop', {
+            ViewManager.notifications.info(game.i18n.format('AdventurersQuestLog.API.Socket.Notifications.RewardDrop', {
                userName: fqlData.userName,
                itemName: fqlData.itemName,
                actorName: data.payload.actor.name
@@ -570,7 +557,7 @@ export class Socket
          Socket.refreshAll();
 
          const dirname = game.i18n.localize(questStatusI18n[target]);
-         ViewManager.notifications.info(game.i18n.format('ForienQuestLog.Notifications.QuestMoved',
+         ViewManager.notifications.info(game.i18n.format('AdventurersQuestLog.Notifications.QuestMoved',
           { name: quest.name, target: dirname }));
       }
 
@@ -720,7 +707,7 @@ export class Socket
    {
       if (game.user.isGM)
       {
-         ViewManager.notifications.warn(game.i18n.format('ForienQuestLog.Notifications.UserCantOpen',
+         ViewManager.notifications.warn(game.i18n.format('AdventurersQuestLog.Notifications.UserCantOpen',
           { user: data.payload.user }));
       }
    }

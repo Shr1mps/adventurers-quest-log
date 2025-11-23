@@ -41,7 +41,7 @@ class QuestDBShim
       if (game.user.isGM) { return QuestDB.createQuest(options); }
 
       return game.settings.get(constants.moduleName, settings.allowPlayersCreate) &&
-      !game.settings.get(constants.moduleName, settings.hideFQLFromPlayers) ? QuestDB.createQuest(options) : null;
+      !game.settings.get(constants.moduleName, settings.hideAQLFromPlayers) ? QuestDB.createQuest(options) : null;
    }
 
    /**

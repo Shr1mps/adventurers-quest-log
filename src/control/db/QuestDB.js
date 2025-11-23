@@ -191,7 +191,7 @@ export class QuestDB
    }
 
    /**
-    * Initializes the QuestDB. If FQL is hidden from the current user then no quests load. All quests are loaded based
+    * Initializes the QuestDB. If AQL is hidden from the current user then no quests load. All quests are loaded based
     * on observability by the current user.
     *
     * This method may be invoked multiple times, but it is generally important to only invoke `init` when the QuestDB
@@ -204,19 +204,19 @@ export class QuestDB
       let folder = await Utils.initializeQuestFolder();
 
       // If the folder doesn't exist then simulate the content parameter. This should only ever occur for a player
-      // logged in when a GM activates FQL for the first time or if the _fql_quests folder is deleted.
+      // logged in when a GM activates AQL for the first time or if the _fql_quests folder is deleted.
       if (!folder)
       {
          if (game.user.isGM)
          {
-            console.warn('ForienQuestLog - Failed to initialize QuestDB as the quest folder / _fql_quests is missing.');
+            console.warn('AdventurersQuestLog - Failed to initialize QuestDB as the quest folder / _fql_quests is missing.');
          }
 
          folder = { content: [] };
       }
 
-      // Skip initialization of data if FQL is hidden from the current player. FQL is never hidden from GM level users.
-      if (!Utils.isFQLHiddenFromPlayers())
+      // Skip initialization of data if AQL is hidden from the current player. AQL is never hidden from GM level users.
+      if (!Utils.isAQLHiddenFromPlayers())
       {
          // Cache `isTrustedPlayerEdit`.
          const isTrustedPlayerEdit = Utils.isTrustedPlayerEdit();
@@ -290,14 +290,14 @@ export class QuestDB
     * user or adding quests that are now observable. This only really needs to occur after particular module setting
     * changes which right now is when trusted player edit is enabled / disabled.
     *
-    * @see FQLSettings.trustedPlayerEdit
+    * @see AQLSettings.trustedPlayerEdit
     */
    static async consistencyCheck()
    {
       const folder = Utils.getQuestFolder();
 
-      // Early out if the folder is not available or FQL is hidden from the current player.
-      if (!folder || Utils.isFQLHiddenFromPlayers()) { return; }
+      // Early out if the folder is not available or AQL is hidden from the current player.
+      if (!folder || Utils.isAQLHiddenFromPlayers()) { return; }
 
       // Create a single map of all QuestEntry instances.
       const questEntryMap = new Map(QuestDB.getAllQuestEntries().map((e) => [e.id, e]));
@@ -398,7 +398,7 @@ export class QuestDB
       const folder = Utils.getQuestFolder();
       if (!folder)
       {
-         console.warn('ForienQuestLog - QuestDB.createQuest - quest folder not found.');
+         console.warn('AdventurersQuestLog - QuestDB.createQuest - quest folder not found.');
          return;
       }
 
@@ -611,7 +611,7 @@ export class QuestDB
             case questStatus.inactive:
                return this.#questsCollect[questStatus.inactive].filter(filterInactive ?? filter);
             default:
-               console.error(`Forien Quest Log - QuestDB - filterCollect - unknown status: ${status}`);
+               console.error(`Adventurer's Quest Log - QuestDB - filterCollect - unknown status: ${status}`);
                return void 0;
          }
       }
@@ -631,102 +631,6 @@ export class QuestDB
     *
     * @param {Function} predicate - The functional predicate to test.
     *
-    * @param {object}   [options] - Optional parameters. If no options are provided the iteration occurs across all
-    *                               quests.
-    *
-    * @param {string}   [options.status] - The quest type / status to iterate.
-    *
-    * @returns {QuestEntry} The QuestEntry, if found, otherwise undefined.
-    * @see Array#find
-    */
-   static find(predicate, options)
-   {
-      for (const questEntry of QuestDB.iteratorEntries(options))
-      {
-         if (predicate(questEntry)) { return questEntry; }
-      }
-
-      return void 0;
-   }
-
-   /**
-    * Returns all QuestEntry instances.
-    *
-    * @returns {QuestEntry[]} All QuestEntry instances.
-    */
-   static getAllQuestEntries()
-   {
-      return this.#flattenQuestsMap();
-   }
-
-   /**
-    * Returns all Quest instances.
-    *
-    * @returns {Quest[]} All quest instances.
-    */
-   static getAllQuests()
-   {
-      return this.#flattenQuestsMap().map((entry) => entry.quest);
-   }
-
-   /**
-    * Provides a quicker method to get the count of quests by quest status or all quests.
-    *
-    * @param {object}   [options] - Optional parameters. If no options are provided the count of all quests is returned.
-    *
-    * @param {string}   [options.status] - The quest status category to count.
-    *
-    * @returns {number} Quest count for the specified type or the count for all quests.
-    */
-   static getCount({ status = void 0 } = {})
-   {
-      if (status === void 0)
-      {
-         return this.#questsMap[questStatus.active].size + this.#questsMap[questStatus.available].size +
-          this.#questsMap[questStatus.completed].size + this.#questsMap[questStatus.failed].size +
-          this.#questsMap[questStatus.inactive].size;
-      }
-
-      return this.#questsMap[status] ? this.#questsMap[status].size : 0;
-   }
-
-   /**
-    * Gets the Quest by quest ID.
-    *
-    * @param {string}   questId - A Foundry ID
-    *
-    * @returns {Quest|void} The Quest.
-    */
-   static getQuest(questId)
-   {
-      const entry = this.#getQuestEntry(questId);
-      return entry ? entry.quest : void 0;
-   }
-
-   /**
-    * Retrieves a QuestEntry by quest ID.
-    *
-    * @param {string}   questId - A Foundry ID
-    *
-    * @returns {QuestEntry} The QuestEntry.
-    */
-   static getQuestEntry(questId)
-   {
-      return this.#getQuestEntry(questId);
-   }
-
-   /**
-    * Provides an iterator across the QuestEntry map of maps returning all {@link QuestEntry} instances or instances of
-    * a particular status category.
-    *
-    * @param {object}   [options] - Optional parameters. If no options are provided the iteration occurs across all
-    *                               quests.
-    *
-    * @param {string}   [options.status] - The quest status category to iterate.
-    *
-    * @yields {QuestEntry} The QuestEntry iterator.
-    */
-   static *iteratorEntries({ status = void 0 } = {})
    {
       if (status === void 0)
       {
@@ -832,7 +736,7 @@ export class QuestDB
             case questStatus.inactive:
                return this.#questsCollect[questStatus.inactive].sort(sortInactive);
             default:
-               console.error(`Forien Quest Log - QuestDB - sortCollect - unknown status: ${status}`);
+               console.error(`Adventurer's Quest Log - QuestDB - sortCollect - unknown status: ${status}`);
                return void 0;
          }
       }
@@ -850,7 +754,7 @@ export class QuestDB
 
    /**
     * Foundry hook callback when a new JournalEntry is created. For quests there are two cases to consider. The first
-    * is straight forward when a new quest is created from FQL. The second case is a bit more challenging and that
+    * is straight forward when a new quest is created from AQL. The second case is a bit more challenging and that
     * occurs when a journal entry / quest is imported from a compendium. In this case we need to scrub the subquests
     * that may no longer resolve to valid journal entries in the system.
     *
@@ -864,11 +768,11 @@ export class QuestDB
    {
       const content = entry.getFlag(constants.moduleName, constants.flagDB);
 
-      // Exit early if no FQL quest data is available.
+      // Exit early if no AQL quest data is available.
       if (!content) { return; }
 
-      // Process the quest content if it is currently observable and FQL is not hidden from the current user.
-      if (this.#isObservable(content, entry) && !Utils.isFQLHiddenFromPlayers())
+      // Process the quest content if it is currently observable and AQL is not hidden from the current user.
+      if (this.#isObservable(content, entry) && !Utils.isAQLHiddenFromPlayers())
       {
          const quest = new Quest(content, entry);
 
@@ -962,7 +866,7 @@ export class QuestDB
          let questEntry = this.#getQuestEntry(entry.id);
 
          // Is the quest currently observable and not hidden from the current user.
-         const isObservable = this.#isObservable(content, entry) && !Utils.isFQLHiddenFromPlayers();
+         const isObservable = this.#isObservable(content, entry) && !Utils.isAQLHiddenFromPlayers();
 
          if (questEntry)
          {
@@ -1057,7 +961,7 @@ export class QuestDB
    /**
     * Provides the observability test for a quest based on the user level and permissions of the backing journal entry.
     * GM level users always can observe any quests. Trusted players w/ the module setting
-    * {@link FQLSettings.trustedPlayerEdit} enabled and the owner of the quest can observe quests in the inactive status.
+    * {@link AQLSettings.trustedPlayerEdit} enabled and the owner of the quest can observe quests in the inactive status.
     * Otherwise, quests are only observable by players when the default or personal permission is
     * {@link CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER} or higher.
     *
@@ -1152,7 +1056,7 @@ export class QuestDB
 
       if (!this.#questsMap[entry.status])
       {
-         console.error(`ForienQuestLog - QuestDB - set quest error - unknown status: ${entry.status}`);
+         console.error(`AdventurersQuestLog - QuestDB - set quest error - unknown status: ${entry.status}`);
          return;
       }
 
@@ -1229,7 +1133,7 @@ export class QuestDB
     *
     * @param {QuestEntry}     questEntry - Target quest entry.
     *
-    * @param {QuestData}      content - The FQL quest data from journal entry.
+    * @param {QuestData}      content - The AQL quest data from journal entry.
     *
     * @param {JournalEntry}   entry - The backing journal entry.
     *

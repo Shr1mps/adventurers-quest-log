@@ -1,4 +1,4 @@
-import { FQLHooks }  from './control/index.js';
+import { AQLHooks }  from './control/index.js';
 
 // Initialize all hooks.
-FQLHooks.init();
+AQLHooks.init();

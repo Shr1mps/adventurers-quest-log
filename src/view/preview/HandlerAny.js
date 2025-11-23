@@ -4,7 +4,7 @@ import {
 
 import { QuestAPI }  from '../../control/public/index.js';
 
-import { FQLDialog } from '../internal/index.js';
+import { AQLDialog } from '../internal/index.js';
 
 /**
  * These handler {@link JQuery} callbacks can be called on any tab.
@@ -20,7 +20,7 @@ export class HandlerAny
    }
 
    /**
-    * Confirms deleting a quest with {@link FQLDialog.confirmDeleteQuest} before invoking {@link QuestDB.deleteQuest}.
+    * Confirms deleting a quest with {@link AQLDialog.confirmDeleteQuest} before invoking {@link QuestDB.deleteQuest}.
     *
     * @param {JQuery.ClickEvent} event - JQuery.ClickEvent
     *
@@ -33,7 +33,7 @@ export class HandlerAny
       const questId = $(event.target).data('quest-id');
       const name = $(event.target).data('quest-name');
 
-      const result = await FQLDialog.confirmDeleteQuest({ name, result: questId, questId: quest.id });
+      const result = await AQLDialog.confirmDeleteQuest({ name, result: questId, questId: quest.id });
       if (result)
       {
          await QuestDB.deleteQuest({ questId: result });

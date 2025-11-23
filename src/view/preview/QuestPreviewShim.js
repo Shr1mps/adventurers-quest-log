@@ -1,7 +1,7 @@
 import { QuestAPI } from '../../control/public/index.js';
 
 /**
- * Provides a very lightweight shim for {@link JournalEntry} documents that are FQL quests. It defers to
+ * Provides a very lightweight shim for {@link JournalEntry} documents that are AQL quests. It defers to
  * opening the {@link Quest} to the {@link QuestAPI.open} method. Foundry will invoke this shim when a JournalEntry
  * is clicked in the {@link JournalDirectory} via {@link DocumentDirectory._onClickEntryName}. This shim
  * is set to {@link JournalEntry._sheet} in {@link QuestDB} when JE docs are created or loaded.

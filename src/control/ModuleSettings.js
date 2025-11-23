@@ -55,13 +55,13 @@ export class ModuleSettings
    /**
     * Registers all module settings.
     *
-    * @see FQLSettings
+    * @see AQLSettings
     */
    static registerSettings()
    {
       game.settings.register(constants.moduleName, settings.allowPlayersDrag, {
-         name: 'ForienQuestLog.Settings.allowPlayersDrag.Enable',
-         hint: 'ForienQuestLog.Settings.allowPlayersDrag.EnableHint',
+         name: 'AdventurersQuestLog.Settings.allowPlayersDrag.Enable',
+         hint: 'AdventurersQuestLog.Settings.allowPlayersDrag.EnableHint',
          scope: this.#scope.world,
          config: true,
          default: false,
@@ -80,8 +80,8 @@ export class ModuleSettings
       });
 
       game.settings.register(constants.moduleName, settings.allowPlayersCreate, {
-         name: 'ForienQuestLog.Settings.allowPlayersCreate.Enable',
-         hint: 'ForienQuestLog.Settings.allowPlayersCreate.EnableHint',
+         name: 'AdventurersQuestLog.Settings.allowPlayersCreate.Enable',
+         hint: 'AdventurersQuestLog.Settings.allowPlayersCreate.EnableHint',
          scope: this.#scope.world,
          config: true,
          default: false,
@@ -97,8 +97,8 @@ export class ModuleSettings
       });
 
       game.settings.register(constants.moduleName, settings.allowPlayersAccept, {
-         name: 'ForienQuestLog.Settings.allowPlayersAccept.Enable',
-         hint: 'ForienQuestLog.Settings.allowPlayersAccept.EnableHint',
+         name: 'AdventurersQuestLog.Settings.allowPlayersAccept.Enable',
+         hint: 'AdventurersQuestLog.Settings.allowPlayersAccept.EnableHint',
          scope: this.#scope.world,
          config: true,
          default: false,
@@ -117,8 +117,8 @@ export class ModuleSettings
       });
 
       game.settings.register(constants.moduleName, settings.trustedPlayerEdit, {
-         name: 'ForienQuestLog.Settings.trustedPlayerEdit.Enable',
-         hint: 'ForienQuestLog.Settings.trustedPlayerEdit.EnableHint',
+         name: 'AdventurersQuestLog.Settings.trustedPlayerEdit.Enable',
+         hint: 'AdventurersQuestLog.Settings.trustedPlayerEdit.EnableHint',
          scope: this.#scope.world,
          config: true,
          default: false,
@@ -138,8 +138,8 @@ export class ModuleSettings
       });
 
       game.settings.register(constants.moduleName, settings.countHidden, {
-         name: 'ForienQuestLog.Settings.countHidden.Enable',
-         hint: 'ForienQuestLog.Settings.countHidden.EnableHint',
+         name: 'AdventurersQuestLog.Settings.countHidden.Enable',
+         hint: 'AdventurersQuestLog.Settings.countHidden.EnableHint',
          scope: this.#scope.world,
          config: true,
          default: false,
@@ -158,8 +158,8 @@ export class ModuleSettings
       });
 
       game.settings.register(constants.moduleName, settings.dynamicBookmarkBackground, {
-         name: 'ForienQuestLog.Settings.dynamicBookmarkBackground.Enable',
-         hint: 'ForienQuestLog.Settings.dynamicBookmarkBackground.EnableHint',
+         name: 'AdventurersQuestLog.Settings.dynamicBookmarkBackground.Enable',
+         hint: 'AdventurersQuestLog.Settings.dynamicBookmarkBackground.EnableHint',
          scope: this.#scope.world,
          config: true,
          default: true,
@@ -171,66 +171,9 @@ export class ModuleSettings
          }
       });
 
-      game.settings.register(constants.moduleName, settings.navStyle, {
-         name: 'ForienQuestLog.Settings.navStyle.Enable',
-         hint: 'ForienQuestLog.Settings.navStyle.EnableHint',
-         scope: this.#scope.client,
-         config: true,
-         default: 'bookmarks',
-         type: String,
-         choices: {
-            bookmarks: 'ForienQuestLog.Settings.navStyle.bookmarks',
-            classic: 'ForienQuestLog.Settings.navStyle.classic'
-         },
-         onChange: async () =>
-         {
-            // Must enrich all quests again in QuestDB.
-            await QuestDB.enrichAll();
-
-            // Must render the quest log.
-            if (ViewManager.questLog.rendered) { ViewManager.questLog.render(); }
-         }
-      });
-
-      game.settings.register(constants.moduleName, settings.showTasks, {
-         name: 'ForienQuestLog.Settings.showTasks.Enable',
-         hint: 'ForienQuestLog.Settings.showTasks.EnableHint',
-         scope: this.#scope.world,
-         config: true,
-         default: 'default',
-         type: String,
-         choices: {
-            default: 'ForienQuestLog.Settings.showTasks.default',
-            onlyCurrent: 'ForienQuestLog.Settings.showTasks.onlyCurrent',
-            no: 'ForienQuestLog.Settings.showTasks.no'
-         },
-         onChange: async () =>
-         {
-            // Must enrich all quests again in QuestDB.
-            await QuestDB.enrichAll();
-
-            // Must render the quest log.
-            ViewManager.renderAll();
-         }
-      });
-
-      game.settings.register(constants.moduleName, settings.defaultPermission, {
-         name: 'ForienQuestLog.Settings.defaultPermissionLevel.Enable',
-         hint: 'ForienQuestLog.Settings.defaultPermissionLevel.EnableHint',
-         scope: this.#scope.world,
-         config: true,
-         default: 'Observer',
-         type: String,
-         choices: {
-            OBSERVER: 'ForienQuestLog.Settings.defaultPermissionLevel.OBSERVER',
-            NONE: 'ForienQuestLog.Settings.defaultPermissionLevel.NONE',
-            OWNER: 'ForienQuestLog.Settings.defaultPermissionLevel.OWNER'
-         }
-      });
-
-      game.settings.register(constants.moduleName, settings.hideFQLFromPlayers, {
-         name: 'ForienQuestLog.Settings.hideFQLFromPlayers.Enable',
-         hint: 'ForienQuestLog.Settings.hideFQLFromPlayers.EnableHint',
+      game.settings.register(constants.moduleName, settings.hideAQLFromPlayers, {
+         name: 'AdventurersQuestLog.Settings.hideAQLFromPlayers.Enable',
+         hint: 'AdventurersQuestLog.Settings.hideAQLFromPlayers.EnableHint',
          scope: this.#scope.world,
          config: true,
          default: false,
@@ -238,11 +181,11 @@ export class ModuleSettings
          onChange: async(value) =>
          {
             // Swap macro image based on current state. No need to await.
-            if (game.user.isGM) { await Utils.setMacroImage(settings.hideFQLFromPlayers, value); }
+            if (game.user.isGM) { await Utils.setMacroImage(settings.hideAQLFromPlayers, value); }
 
             if (!game.user.isGM)
             {
-               // Hide all FQL apps from non GM user and remove the ui.controls for FQL.
+               // Hide all AQL apps from non GM user and remove the ui.controls for AQL.
                if (value)
                {
                   ViewManager.closeAll({ questPreview: true, updateSetting: false });
@@ -255,7 +198,7 @@ export class ModuleSettings
                   }
 
                   // Remove all quests from in-memory DB. This is required so that users can not retrieve quests
-                  // from the QuestAPI or content links in Foundry resolve when FQL is hidden.
+                  // from the QuestAPI or content links in Foundry resolve when AQL is hidden.
                   QuestDB.removeAll();
                }
                else
@@ -277,15 +220,15 @@ export class ModuleSettings
             // Render the journal to show / hide open quest log button & folder.
             game?.journal?.render();
 
-            // Close or open the quest tracker based on active quests (users w/ FQL hidden will have no quests in
+            // Close or open the quest tracker based on active quests (users w/ AQL hidden will have no quests in
             // QuestDB)
             ViewManager.renderOrCloseQuestTracker({ updateSetting: false });
          }
       });
 
       game.settings.register(constants.moduleName, settings.notifyRewardDrop, {
-         name: 'ForienQuestLog.Settings.notifyRewardDrop.Enable',
-         hint: 'ForienQuestLog.Settings.notifyRewardDrop.EnableHint',
+         name: 'AdventurersQuestLog.Settings.notifyRewardDrop.Enable',
+         hint: 'AdventurersQuestLog.Settings.notifyRewardDrop.EnableHint',
          scope: this.#scope.world,
          config: true,
          default: false,
@@ -298,8 +241,8 @@ export class ModuleSettings
       });
 
       game.settings.register(constants.moduleName, settings.showFolder, {
-         name: 'ForienQuestLog.Settings.showFolder.Enable',
-         hint: 'ForienQuestLog.Settings.showFolder.EnableHint',
+         name: 'AdventurersQuestLog.Settings.showFolder.Enable',
+         hint: 'AdventurersQuestLog.Settings.showFolder.EnableHint',
          scope: this.#scope.world,
          config: true,
          default: false,
@@ -329,7 +272,7 @@ export class ModuleSettings
             // quests.
             if (value && QuestDB.getCount({ status: questStatus.active }) === 0)
             {
-               ViewManager.notifications.info(game.i18n.localize('ForienQuestLog.Notifications.QuestTrackerNoActive'));
+               ViewManager.notifications.info(game.i18n.localize('AdventurersQuestLog.Notifications.QuestTrackerNoActive'));
             }
 
             // Swap macro image based on current state. No need to await.
@@ -342,8 +285,8 @@ export class ModuleSettings
       /**
        * This is the most complex module setting handling as quite a bit of logic is contained below to handle
        * setting the primary quest. Since the onChange event does not pass the old and new value the old value for
-       * {@link FQLSettings.primaryQuest} is stored in {@link FQLSessionConstants.currentPrimaryQuest} which is
-       * initially set in {@link FQLHooks.foundryReady}.
+       * {@link AQLSettings.primaryQuest} is stored in {@link AQLSessionConstants.currentPrimaryQuest} which is
+       * initially set in {@link AQLHooks.foundryReady}.
        *
        * This setting is set from {@link Socket.setQuestPrimary} or the handler in Socket.
        *
@@ -403,7 +346,7 @@ export class ModuleSettings
             // Post a notification if a new primary quest was set.
             if (newPrimaryQuestName)
             {
-               ViewManager.notifications.info(game.i18n.format('ForienQuestLog.Notifications.QuestPrimary',
+               ViewManager.notifications.info(game.i18n.format('AdventurersQuestLog.Notifications.QuestPrimary',
                 { name: newPrimaryQuestName }));
             }
          }
@@ -428,8 +371,8 @@ export class ModuleSettings
       });
 
       game.settings.register(constants.moduleName, settings.questTrackerResizable, {
-         name: 'ForienQuestLog.Settings.questTrackerResizable.Enable',
-         hint: 'ForienQuestLog.Settings.questTrackerResizable.EnableHint',
+         name: 'AdventurersQuestLog.Settings.questTrackerResizable.Enable',
+         hint: 'AdventurersQuestLog.Settings.questTrackerResizable.EnableHint',
          scope: this.#scope.client,
          config: true,
          default: false,
@@ -447,7 +390,7 @@ export class ModuleSettings
    /**
     * Registers all module settings.
     *
-    * @see FQLKeybindings
+    * @see AQLKeybindings
     */
    static registerKeybindings()
    {
@@ -455,8 +398,8 @@ export class ModuleSettings
       const { SHIFT, CONTROL, ALT } = foundry.helpers.interaction.KeyboardManager.MODIFIER_KEYS;
 
       game.keybindings.register(constants.moduleName, keybindings.openQuestLog, {
-         name: `ForienQuestLog.Keybindings.openQuestLog.Name`,
-         hint: `ForienQuestLog.Keybindings.openQuestLog.Hint`,
+         name: `AdventurersQuestLog.Keybindings.openQuestLog.Name`,
+         hint: `AdventurersQuestLog.Keybindings.openQuestLog.Hint`,
          editable: [
             {
                modifiers: [CONTROL],
@@ -470,8 +413,8 @@ export class ModuleSettings
       });
 
       game.keybindings.register(constants.moduleName, keybindings.openPrimaryQuest, {
-         name: `ForienQuestLog.Keybindings.openPrimaryQuest.Name`,
-         hint: `ForienQuestLog.Keybindings.openPrimaryQuest.Hint`,
+         name: `AdventurersQuestLog.Keybindings.openPrimaryQuest.Name`,
+         hint: `AdventurersQuestLog.Keybindings.openPrimaryQuest.Hint`,
          precedence: CONST.KEYBINDING_PRECEDENCE.DEFERRED,
          editable: [
             {
@@ -486,8 +429,8 @@ export class ModuleSettings
       });
 
       game.keybindings.register(constants.moduleName, keybindings.toggleQuestTracker, {
-         name: `ForienQuestLog.Keybindings.toggleQuestTracker.Name`,
-         hint: `ForienQuestLog.Keybindings.toggleQuestTracker.Hint`,
+         name: `AdventurersQuestLog.Keybindings.toggleQuestTracker.Name`,
+         hint: `AdventurersQuestLog.Keybindings.toggleQuestTracker.Hint`,
          precedence: CONST.KEYBINDING_PRECEDENCE.DEFERRED,
          editable: [
             {

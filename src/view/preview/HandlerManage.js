@@ -2,7 +2,7 @@ import {
    QuestDB,
    ViewManager }                       from '../../control/index.js';
 
-import { FQLDocumentOwnershipConfig }  from '../internal/index.js';
+import { AQLDocumentOwnershipConfig }  from '../internal/index.js';
 
 /**
  * Provides all {@link JQuery} callbacks for the `management` tab.
@@ -53,7 +53,7 @@ export class HandlerManage
       {
          if (!questPreview._ownershipControl)
          {
-            questPreview._ownershipControl = new FQLDocumentOwnershipConfig(quest.entry, {
+            questPreview._ownershipControl = new AQLDocumentOwnershipConfig(quest.entry, {
                top: Math.min(questPreview.position.top, window.innerHeight - 350),
                left: questPreview.position.left + 125
             });

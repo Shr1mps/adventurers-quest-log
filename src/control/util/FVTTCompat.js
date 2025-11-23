@@ -6,7 +6,7 @@ import { constants } from '../../model/constants.js';
  * flags.
  *
  * Previously `FVTTCompat` provided v9 / v10+ shims for accessing Foundry core API. This compatibility layer is
- * maintained in the codebase, but for the time being the latest FQL is released for v11+ and the shimming
+ * maintained in the codebase, but for the time being the latest AQL is released for v11+ and the shimming
  * below just returns the current core API call / data. See the below sample code for how the shim is supposed to work
  * if necessary to re-implement shims in the future.
  *
@@ -72,9 +72,9 @@ export class FVTTCompat
    /**
     * @param {object} data - data transfer from macro hot bar drop.
     *
-    * @returns {boolean} Data transfer object is an FQL macro.
+    * @returns {boolean} Data transfer object is an AQL macro.
     */
-   static isFQLMacroDataTransfer(data)
+   static isAQLMacroDataTransfer(data)
    {
       if (data?.type !== 'Macro') { return false; }
 

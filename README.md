@@ -1,12 +1,12 @@
-# FoundryVTT - Forien's Quest Log
+# FoundryVTT - Adventurer's Quest Log
 
-![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/Forien/foundryvtt-forien-quest-log?style=for-the-badge&label=Forien%27s+Quest+Log+version)
-![GitHub release](https://img.shields.io/github/release-date/Forien/foundryvtt-forien-quest-log?style=for-the-badge)
+![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/Shr1mps/adventurers-quest-log?style=for-the-badge&label=Forien%27s+Quest+Log+version)
+![GitHub release](https://img.shields.io/github/release-date/Shr1mps/adventurers-quest-log?style=for-the-badge)
 ![Foundry Core Compatible Version](https://img.shields.io/badge/dynamic/json.svg?url=https%3A%2F%2Fraw.githubusercontent.com%2FForien%2Ffoundryvtt-forien-quest-log%2Fmaster%2Fmodule.json&label=Foundry%20Min%20Version&query=$.compatibility.minimum&colorB=orange&style=for-the-badge)
 ![Foundry Core Verified Version](https://img.shields.io/badge/dynamic/json.svg?url=https%3A%2F%2Fraw.githubusercontent.com%2FForien%2Ffoundryvtt-forien-quest-log%2Fmaster%2Fmodule.json&label=Foundry%20Verified&query=$.compatibility.verified&colorB=orange&style=for-the-badge)
-![License](https://img.shields.io/github/license/Forien/foundryvtt-forien-quest-log?style=for-the-badge)
-![Zip Downloads](https://img.shields.io/github/downloads/Forien/foundryvtt-forien-quest-log/latest/module.zip?style=for-the-badge)
-[![GitHub commits](https://img.shields.io/github/commits-since/Forien/foundryvtt-forien-quest-log/latest?style=for-the-badge)](https://github.com/Forien/foundryvtt-forien-quest-log/commits/)
+![License](https://img.shields.io/github/license/Shr1mps/adventurers-quest-log?style=for-the-badge)
+![Zip Downloads](https://img.shields.io/github/downloads/Shr1mps/adventurers-quest-log/latest/module.zip?style=for-the-badge)
+[![GitHub commits](https://img.shields.io/github/commits-since/Shr1mps/adventurers-quest-log/latest?style=for-the-badge)](https://github.com/Shr1mps/adventurers-quest-log/commits/)
 ![Forge installs](https://img.shields.io/badge/dynamic/json?label=Forge%20Installs&query=package.installs&suffix=%25&url=https%3A%2F%2Fforge-vtt.com%2Fapi%2Fbazaar%2Fpackage%2Fforien-quest-log&style=for-the-badge)      
 [![Discord](https://img.shields.io/badge/Discord-%235865F2.svg?style=for-the-badge&logo=discord&logoColor=white&link=https%3A%2F%2Fdiscord.gg%2FXkTFv8DRDc)](https://discord.gg/XkTFv8DRDc)
 [![Patreon](https://img.shields.io/badge/Patreon-F96854?style=for-the-badge&logo=patreon&logoColor=white)](https://www.patreon.com/foundryworkshop)
@@ -31,15 +31,15 @@ _any_
 
 ## Installation
 
-1. (Recommended) Install Forien's Quest Log from the Foundry package manager directly. 
-   - _or_ manually using the manifest URL: `https://github.com/Forien/foundryvtt-forien-quest-log/releases/latest/download/module.json`
+1. (Recommended) Install Adventurer's Quest Log from the Foundry package manager directly. 
+   - _or_ manually using the manifest URL: `https://github.com/Shr1mps/adventurers-quest-log/releases/latest/download/module.json`
 
 
-2. While loaded in your World, enable **_Forien's Quest Log_** in the `Module Management` configuration. 
+2. While loaded in your World, enable **_Adventurer's Quest Log_** in the `Module Management` configuration. 
 
 ## Recent Updates
 
-The major `0.9.0` update to FQL:
+The major `0.9.0` update to AQL:
 
 - Foundry v13 support.
 - "Jump To Pin" Context Menu option.
@@ -52,13 +52,13 @@ The major `0.9.0` update to FQL:
 
 A button to access the Quest Log is situated on the bottom of Journal Directory or in the left hand scene controls icon 
 toolbar under notes / journal entries where two new icons (scroll and list) opens the Quest Log and Quest Tracker. There
-also are two `macro compendiums` available for FQL that provide ready to go macros to drop onto your hotbar that allow
-convenient access to FQL for players and several GM related options.
+also are two `macro compendiums` available for AQL that provide ready to go macros to drop onto your hotbar that allow
+convenient access to AQL for players and several GM related options.
 
 There is a series of useful [in-depth video tutorials on YouTube](https://www.youtube.com/playlist?list=PLHslnNa8QKdD_M29g_Zs0f9zyAUVJ32Ne) 
 that cover the `0.7 - 0.8` releases.
 
-FQL is quite user-friendly with an intuitive UI, however you might want to [check out the Wiki](https://github.com/Forien/foundryvtt-forien-quest-log/wiki) for more detailed usage including macros and Quest API details for external developers integrations. 
+AQL is quite user-friendly with an intuitive UI, however you might want to [check out the Wiki](https://github.com/Shr1mps/adventurers-quest-log/wiki) for more detailed usage including macros and Quest API details for external developers integrations. 
 
 ## Features
 
@@ -72,15 +72,15 @@ FQL is quite user-friendly with an intuitive UI, however you might want to [chec
 
 ## About
 
-FQL is being updated for stability across core Foundry updates. This stability and long term maintenance of such is 
-the _main feature_ of FQL presently. You can rest assured that the quest log experience you know and _love_ will 
+AQL is being updated for stability across core Foundry updates. This stability and long term maintenance of such is 
+the _main feature_ of AQL presently. You can rest assured that the quest log experience you know and _love_ will 
 continue to be available now and into the future.
 
 ## Translations
 
-FQL uses Weblate to coordinate language translation from community translators. Through this interface you are able to
+AQL uses Weblate to coordinate language translation from community translators. Through this interface you are able to
 provide language corrections and translations. I am more than willing to support even more language translations for
-FQL, so if your language isn't represented yet please visit the [FQL Weblate Portal](https://hosted.weblate.org/projects/foriens-quest-log/)
+AQL, so if your language isn't represented yet please visit the [AQL Weblate Portal](https://hosted.weblate.org/projects/foriens-quest-log/)
 and get in contact.
 
 The following Translations are available:
@@ -107,8 +107,8 @@ The following Translations are available:
 Rock solid stability through future releases of Foundry VTT and even more language / internationalization support.
 At this time a few quality of life features may be added in any given release as well.
 
-_If you think you have found a bug or usability issue with FQL itself please file an issue in the 
-[FQL Issue Tracker](https://github.com/Forien/foundryvtt-forien-quest-log/issues)_.
+_If you think you have found a bug or usability issue with AQL itself please file an issue in the 
+[AQL Issue Tracker](https://github.com/Shr1mps/adventurers-quest-log/issues)_.
 
 ## Contact
 
@@ -116,17 +116,17 @@ TBD
 
 ## Acknowledgments
 
-See [Authors](https://github.com/Forien/foundryvtt-forien-quest-log/blob/master/AUTHORS) and
-[Contributors](https://github.com/Forien/foundryvtt-forien-quest-log/graphs/contributors)
+See [Authors](https://github.com/Shr1mps/adventurers-quest-log/blob/master/AUTHORS) and
+[Contributors](https://github.com/Shr1mps/adventurers-quest-log/graphs/contributors)
 
 ## Support (Historical)
 
-Between the summer of '21 and '24 FQL was developed and maintained by Michael Leahy aka [TyphonJS](https://github.com/typhonrt) / 
-[TyphonJS Discord](https://typhonjs.io/discord/). Michael took FQL from MVP to the questing powerhouse that FQL became
+Between the summer of '21 and '24 AQL was developed and maintained by Michael Leahy aka [TyphonJS](https://github.com/typhonrt) / 
+[TyphonJS Discord](https://typhonjs.io/discord/). Michael took AQL from MVP to the questing powerhouse that AQL became
 and maintained the package through a challenging series of Foundry core update `v0.8` through `v12`. 
 
 ## License
 
-Forien's Quest Log is a module for Foundry VTT by Forien and is licensed under a [MIT License](https://github.com/Forien/foundryvtt-forien-quest-log/blob/master/LICENSE). 
+Adventurer's Quest Log is a module for Foundry VTT by Shr1mps and is licensed under a [MIT License](https://github.com/Shr1mps/adventurers-quest-log/blob/master/LICENSE). 
 
 This work is licensed under Foundry Virtual Tabletop [EULA - Limited License Agreement for module development from February 17, 2021](https://foundryvtt.com/article/license/).

@@ -1,12 +1,12 @@
 {
-  "name": "forien-quest-log",
+  "name": "adventurers-quest-log",
   "description": "This package.json just provides a PostCSS build script for Sass to CSS",
   "license": "MIT",
   "private": true,
   "type": "module",
-  "author": "Michael Leahy <support@typhonjs.io> (https://github.com/typhonrt)",
+  "author": "Shr1mps (https://github.com/Shr1mps)",
   "contributors": [
-    "Michael Leahy <support@typhonjs.io> (https://github.com/typhonrt)"
+    "Shr1mps (https://github.com/Shr1mps)"
   ],
   "dependencies": {
     "collect.js": "^4.36.0",
@@ -27,12 +27,17 @@
     "postcss-cli": "^11.0.0",
     "postcss-preset-env": "^9.6.0",
     "rollup": "^4.18.0",
-    "sass": "^1.77.0"
+    "sass": "^1.77.0",
+    "jest": "^29.7.0"
   },
-  "browserslist": [">5%", "not IE 11"],
+  "browserslist": [
+    ">5%",
+    "not IE 11"
+  ],
   "scripts": {
     "build-css": "sass ./styles/init.scss ./css/init.css && postcss ./css/init.css -p sass -u autoprefixer postcss-preset-env cssnano -m -o ./css/init.css",
     "eslint": "eslint .",
-    "rollup-external": "rollup --config"
+    "rollup-external": "rollup --config",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
   }
 }

@@ -7,7 +7,7 @@ import { QuestAPI }  from '../../control/public/index.js';
 
 import { Quest }     from '../../model/index.js';
 
-import { FQLDialog } from '../internal/index.js';
+import { AQLDialog } from '../internal/index.js';
 
 /**
  * Provides all {@link JQuery} callbacks for the {@link QuestLog}.
@@ -48,7 +48,7 @@ export class HandlerLog
       const questId = $(event.target).data('quest-id');
       const name = $(event.target).data('quest-name');
 
-      const result = await FQLDialog.confirmDeleteQuest({ name, result: questId, questId, isQuestLog: true });
+      const result = await AQLDialog.confirmDeleteQuest({ name, result: questId, questId, isQuestLog: true });
       if (result)
       {
          await QuestDB.deleteQuest({ questId: result });

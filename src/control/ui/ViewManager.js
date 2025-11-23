@@ -14,7 +14,7 @@ import {
    settings }              from '../../model/constants.js';
 
 /**
- * Stores and manages all the GUI apps / view for FQL.
+ * Stores and manages all the GUI apps / view for AQL.
  */
 export class ViewManager
 {
@@ -86,9 +86,9 @@ export class ViewManager
 
    /**
     * @returns {QuestLog} The main quest log app accessible from the left hand menu bar or
-    *                     `Hook.call('ForienQuestLog.Open.QuestLog')`.
+    *                     `Hook.call('AdventurersQuestLog.Open.QuestLog')`.
     *
-    * @see FQLHooks.openQuestLog
+    * @see AQLHooks.openQuestLog
     */
    static get questLog() { return this.#Apps.questLog; }
 
@@ -101,7 +101,7 @@ export class ViewManager
 
    /**
     * @returns {QuestTracker} Returns the quest tracker overlap app. This app is accessible when module setting
-    *                         {@link FQLSettings.questTrackerEnable} is enabled.
+    *                         {@link AQLSettings.questTrackerEnable} is enabled.
     */
    static get questTracker() { return this.#Apps.questTracker; }
 
@@ -110,152 +110,6 @@ export class ViewManager
     *
     * @param {boolean}  [opts.questPreview=false] - If true closes all QuestPreview apps.
     *
-    * @param {...*}     [opts.options] - Optional parameters passed onto {@link Application.close}
-    *
-    * @see https://foundryvtt.com/api/classes/client.Application.html#close
-    */
-   static closeAll({ questPreview = false, ...options } = {})
-   {
-      if (ViewManager.questLog.rendered) { ViewManager.questLog.close(options); }
-      if (ViewManager.questTracker.rendered) { ViewManager.questTracker.close(options); }
-
-      if (questPreview)
-      {
-         for (const qp of ViewManager.questPreview.values()) { qp.close(options); }
-      }
-   }
-
-   /**
-    * Convenience method to determine if the QuestTracker is visible to the current user. Always for the GM when
-    * QuestTracker is enabled, but only for users if `hideFromPlayers` is false. There must also be active quests for
-    * the tracker to be visible.
-    *
-    * @returns {boolean} Whether the QuestTracker is visible.
-    */
-   static isQuestTrackerVisible()
-   {
-      return game.settings.get(constants.moduleName, settings.questTrackerEnable) &&
-       (game.user.isGM || !game.settings.get(constants.moduleName, settings.hideFQLFromPlayers)) &&
-        QuestDB.getCount({ status: questStatus.active }) > 0;
-   }
-
-   /**
-    * Refreshes local {@link QuestPreview} apps.
-    *
-    * @param {string|string[]}   questId - A single quest ID or an array of IDs to update.
-    *
-    * @param {RenderOptions}     [options] - Any options to pass onto QuestPreview render method invocation.
-    */
-   static refreshQuestPreview(questId, options = {})
-   {
-      // Handle local QuestPreview rendering.
-      if (Array.isArray(questId))
-      {
-         for (const id of questId)
-         {
-            const questPreview = ViewManager.questPreview.get(id);
-            if (questPreview !== void 0) { questPreview.render(true, options); }
-         }
-      }
-      else
-      {
-         const questPreview = ViewManager.questPreview.get(questId);
-         if (questPreview !== void 0) { questPreview.render(true, options); }
-      }
-   }
-
-   /**
-    * Renders all GUI apps including the quest tracker which may also be closed depending on
-    * {@link ViewManager.isQuestTrackerVisible}. With the option `questPreview` set to true all QuestPreviews are also
-    * rendered. Remaining options are forwarded onto the Foundry Application render method.
-    *
-    * @param {object}   opts - Optional parameters
-    *
-    * @param {boolean}  [opts.force] - Forces a data refresh.
-    *
-    * @param {boolean}  [opts.questPreview] - Render all open QuestPreview apps.
-    *
-    * @param {...*}     [opts.options] - Remaining options for the {@link Application.render} method.
-    *
-    * @see https://foundryvtt.com/api/classes/client.Application.html#render
-    */
-   static renderAll({ force = false, questPreview = false, ...options } = {})
-   {
-      // Never force render the quest log to maintain quest details pages above the log.
-      if (ViewManager.questLog.rendered) { ViewManager.questLog.render(false, options); }
-
-      ViewManager.renderOrCloseQuestTracker({ updateSetting: false });
-
-      if (questPreview)
-      {
-         for (const qp of ViewManager.questPreview.values())
-         {
-            if (qp.rendered) { qp.render(force, options); }
-         }
-      }
-   }
-
-   /**
-    * If the QuestTracker is visible then render it otherwise close it.
-    *
-    * @param {object}   [options] - Optional parameters.
-    *
-    * @param {boolean}  [options.updateSetting=true] - If closed true then {@link settings.questTrackerEnable} is set
-    *                                                  to false.
-    */
-   static renderOrCloseQuestTracker(options = {})
-   {
-      if (ViewManager.isQuestTrackerVisible())
-      {
-         ViewManager.questTracker.render(true, { focus: false });
-      }
-      else
-      {
-         // Necessary to check rendered state as the setting is set to false in the close method.
-         if (ViewManager.questTracker.rendered) { ViewManager.questTracker.close(options); }
-      }
-   }
-
-   /**
-    * Performs the second half of the quest addition view management.
-    *
-    * @param {object}   options - Optional parameters.
-    *
-    * @param {Quest}    options.quest - The new quest being added.
-    *
-    * @param {boolean}  [options.notify=true] - Post a UI notification with the quest name and the status / category.
-    *
-    * @param {boolean}  [options.swapTab=true] - If rendered switch to the QuestLog tab of the new quest status.
-    */
-   static questAdded({ quest, notify = true, swapTab = true } = {})
-   {
-      if (notify)
-      {
-         ui.notifications.info(game.i18n.format('ForienQuestLog.Notifications.QuestAdded', {
-            name: quest.name,
-            status: game.i18n.localize(questStatusI18n[quest.status])
-         }));
-      }
-
-      if (swapTab)
-      {
-         const questLog = ViewManager.questLog;
-         if (questLog._tabs[0] && quest.status !== questLog?._tabs[0]?.active && null !== questLog?._tabs[0]?._nav)
-         {
-            questLog._tabs[0].activate(quest.status);
-         }
-      }
-
-      if (quest.isObservable)
-      {
-         const questSheet = quest.sheet;
-         questSheet.render(true, { focus: true });
-
-         // Set current QuestPreview being tracked as the add app.
-         this.#newQuestPreviewApp = questSheet;
-      }
-   }
-
    /**
     * The first half of the add quest action which verifies if there is a current "add" QuestPreview open. If so it
     * will bring the current add QuestPreview app to front, post a UI notification and return false. Otherwise returns
@@ -270,7 +124,7 @@ export class ViewManager
          if (this.#newQuestPreviewApp.rendered)
          {
             this.#newQuestPreviewApp.bringToTop();
-            ViewManager.notifications.warn(game.i18n.localize('ForienQuestLog.Notifications.FinishQuestAdded'));
+            ViewManager.notifications.warn(game.i18n.localize('AdventurersQuestLog.Notifications.FinishQuestAdded'));
             return false;
          }
          else

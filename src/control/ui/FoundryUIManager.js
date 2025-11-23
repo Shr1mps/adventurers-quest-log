@@ -10,10 +10,10 @@ import {
  * Defines a rectangle with essential contains check. Used to define the pinning rectangle next to the
  * upper left of the sidebar.
  */
-class FQLRect extends DOMRect
+class AQLRect extends DOMRect
 {
    /**
-    * Tests if the point is contained by this FQLRect.
+    * Tests if the point is contained by this AQLRect.
     *
     * @param {number}   x - Point X
     *
@@ -72,7 +72,7 @@ export class FoundryUIManager
    static #noteControls = {
       quest_log: {
          name: 'quest_log',
-         title: 'ForienQuestLog.QuestLog.Title',
+         title: 'AdventurersQuestLog.QuestLog.Title',
          icon: 'fas fa-scroll',
          visible: true,
          onChange: () => ViewManager.questLog.render(true, { focus: true }),
@@ -80,7 +80,7 @@ export class FoundryUIManager
       },
       quest_tracker: {
          name: 'quest_tracker',
-         title: 'ForienQuestLog.QuestTracker.Title',
+         title: 'AdventurersQuestLog.QuestTracker.Title',
          icon: 'fas fa-tasks',
          visible: true,
          onChange: async () => { await game.settings.set(constants.moduleName, settings.questTrackerEnable, true); },
@@ -141,7 +141,7 @@ export class FoundryUIManager
          right: -1,
          bottom: -1,
          left: -1,
-         rectDock: new FQLRect(0, 0, 15, 30),
+         rectDock: new AQLRect(0, 0, 15, 30),
       }),
 
       /**
@@ -179,7 +179,7 @@ export class FoundryUIManager
    }
 
    /**
-    * @returns {{top: number, right: number, bottom: number, left: number, rectDock: FQLRect}} Boundaries for the Tracker
+    * @returns {{top: number, right: number, bottom: number, left: number, rectDock: AQLRect}} Boundaries for the Tracker
     */
    static get boundaries()
    {

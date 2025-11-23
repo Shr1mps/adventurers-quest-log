@@ -1,4 +1,22 @@
 <div class="quest-log {{style}}">
+  <div class="log-header">
+    <div class="search-bar">
+      <input type="text" name="search" placeholder="{{localize 'ForienQuestLog.QuestLog.SearchPlaceholder'}}" value="{{searchQuery}}" data-action="search">
+    </div>
+    <div class="sort-controls">
+      <select name="sort" data-action="sort">
+        <option value="alpha" {{#if (eq sortKey "alpha")}}selected{{/if}}>{{localize 'ForienQuestLog.QuestLog.Sort.Alpha'}}</option>
+        <option value="date" {{#if (eq sortKey "date")}}selected{{/if}}>{{localize 'ForienQuestLog.QuestLog.Sort.Date'}}</option>
+        <option value="priority" {{#if (eq sortKey "priority")}}selected{{/if}}>{{localize 'ForienQuestLog.QuestLog.Sort.Priority'}}</option>
+      </select>
+    </div>
+    {{#if canCreate}}
+      <button type="button" class="new-quest-btn" data-action="newQuest">
+        <i class="fas fa-plus"></i> {{localize 'ForienQuestLog.QuestLog.NewQuest'}}
+      </button>
+    {{/if}}
+  </div>
+
   <nav class="log-tabs tabs {{style}}" data-group="primary">
     <a class="item" data-tab="available">{{localize 'ForienQuestLog.QuestTypes.Labels.Available'}}</a>
     <a class="item" data-tab="active">{{localize 'ForienQuestLog.QuestTypes.Labels.Active'}}</a>

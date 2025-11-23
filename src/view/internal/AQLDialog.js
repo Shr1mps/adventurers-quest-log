@@ -11,7 +11,7 @@
  * operation and brings the dialog to front and renders again. This provides reasonable semi-modal behavior from just a
  * single dialog instance shared across confirmation to delete quests, tasks, and rewards.
  */
-export class FQLDialog
+export class AQLDialog
 {
    /**
     * @private
@@ -23,14 +23,14 @@ export class FQLDialog
 
 
    /**
-    * Stores any open FQLDialogImpl.
+    * Stores any open AQLDialogImpl.
     *
-    * @type {FQLDialogImpl}
+    * @type {AQLDialogImpl}
     */
    static #deleteDialog = void 0;
 
    /**
-    * Closes any open FQLDialogImpl that is associated with the questId or quest log. FQLDialogImpl gets associated
+    * Closes any open AQLDialogImpl that is associated with the questId or quest log. AQLDialogImpl gets associated
     * with the last app that invoked the dialog.
     *
     * @param {object}   [options] - Optional parameters.
@@ -41,8 +41,8 @@ export class FQLDialog
     */
    static closeDialogs({ questId, isQuestLog = false } = {})
    {
-      if (this.#deleteDialog && (this.#deleteDialog.fqlQuestId === questId ||
-       this.#deleteDialog.fqlIsQuestLog === isQuestLog))
+      if (this.#deleteDialog && (this.#deleteDialog.aqlQuestId === questId ||
+       this.#deleteDialog.aqlIsQuestLog === isQuestLog))
       {
          this.#deleteDialog.close();
          this.#deleteDialog = void 0;
@@ -66,13 +66,13 @@ export class FQLDialog
    {
       if (this.#deleteDialog && this.#deleteDialog.rendered)
       {
-         return this.#deleteDialog.updateFQLData({
+         return this.#deleteDialog.updateAQLData({
             name,
             result,
             questId,
             isQuestLog,
-            title: game.i18n.localize('ForienQuestLog.Labels.Quest'),
-            body: 'ForienQuestLog.DeleteDialog.BodyQuest'
+            title: game.i18n.localize('AdventurersQuestLog.Labels.Quest'),
+            body: 'AdventurersQuestLog.DeleteDialog.BodyQuest'
          });
       }
 
@@ -80,14 +80,14 @@ export class FQLDialog
 
       return new Promise((resolve) =>
       {
-         this.#deleteDialog = new FQLDialogImpl({
+         this.#deleteDialog = new AQLDialogImpl({
             resolve,
             name,
             result,
             questId,
             isQuestLog,
-            title: game.i18n.localize('ForienQuestLog.Labels.Quest'),
-            body: 'ForienQuestLog.DeleteDialog.BodyQuest'
+            title: game.i18n.localize('AdventurersQuestLog.Labels.Quest'),
+            body: 'AdventurersQuestLog.DeleteDialog.BodyQuest'
          });
 
          this.#deleteDialog.render(true);
@@ -111,13 +111,13 @@ export class FQLDialog
    {
       if (this.#deleteDialog && this.#deleteDialog.rendered)
       {
-         return this.#deleteDialog.updateFQLData({
+         return this.#deleteDialog.updateAQLData({
             name,
             result,
             questId,
             isQuestLog,
-            title: game.i18n.localize('ForienQuestLog.QuestPreview.Labels.Reward'),
-            body: 'ForienQuestLog.DeleteDialog.BodyReward'
+            title: game.i18n.localize('AdventurersQuestLog.QuestPreview.Labels.Reward'),
+            body: 'AdventurersQuestLog.DeleteDialog.BodyReward'
          });
       }
 
@@ -125,14 +125,14 @@ export class FQLDialog
 
       return new Promise((resolve) =>
       {
-         this.#deleteDialog = new FQLDialogImpl({
+         this.#deleteDialog = new AQLDialogImpl({
             resolve,
             name,
             result,
             questId,
             isQuestLog,
-            title: game.i18n.localize('ForienQuestLog.QuestPreview.Labels.Reward'),
-            body: 'ForienQuestLog.DeleteDialog.BodyReward'
+            title: game.i18n.localize('AdventurersQuestLog.QuestPreview.Labels.Reward'),
+            body: 'AdventurersQuestLog.DeleteDialog.BodyReward'
          });
 
          this.#deleteDialog.render(true);
@@ -156,13 +156,13 @@ export class FQLDialog
    {
       if (this.#deleteDialog && this.#deleteDialog.rendered)
       {
-         return this.#deleteDialog.updateFQLData({
+         return this.#deleteDialog.updateAQLData({
             name,
             result,
             questId,
             isQuestLog,
-            title: game.i18n.localize('ForienQuestLog.QuestPreview.Labels.Objective'),
-            body: 'ForienQuestLog.DeleteDialog.BodyObjective'
+            title: game.i18n.localize('AdventurersQuestLog.QuestPreview.Labels.Objective'),
+            body: 'AdventurersQuestLog.DeleteDialog.BodyObjective'
          });
       }
 
@@ -170,14 +170,14 @@ export class FQLDialog
 
       return new Promise((resolve) =>
       {
-         this.#deleteDialog = new FQLDialogImpl({
+         this.#deleteDialog = new AQLDialogImpl({
             resolve,
             name,
             result,
             questId,
             isQuestLog,
-            title: game.i18n.localize('ForienQuestLog.QuestPreview.Labels.Objective'),
-            body: 'ForienQuestLog.DeleteDialog.BodyObjective'
+            title: game.i18n.localize('AdventurersQuestLog.QuestPreview.Labels.Objective'),
+            body: 'AdventurersQuestLog.DeleteDialog.BodyObjective'
          });
 
          this.#deleteDialog.render(true);
@@ -186,25 +186,25 @@ export class FQLDialog
 }
 
 /**
- * Provides the FQL dialog implementation.
+ * Provides the AQL dialog implementation.
  */
-class FQLDialogImpl extends foundry.appv1.api.Dialog
+class AQLDialogImpl extends foundry.appv1.api.Dialog
 {
    /**
     * Stores the options specific to the dialog
     *
-    * @type {FQLDialogOptions}
+    * @type {AQLDialogOptions}
     */
-   #fqlOptions;
+   #aqlOptions;
 
    /**
-    * @param {FQLDialogOptions} options FQLDialogImpl Options
+    * @param {AQLDialogOptions} options AQLDialogImpl Options
     */
    constructor(options)
    {
       super(void 0, { minimizable: false, height: 'auto' });
 
-      this.#fqlOptions = options;
+      this.#aqlOptions = options;
 
       /**
        * The Dialog options to set.
@@ -213,19 +213,19 @@ class FQLDialogImpl extends foundry.appv1.api.Dialog
        * @see https://foundryvtt.com/api/classes/client.Dialog.html
        */
       this.data = {
-         title: game.i18n.format('ForienQuestLog.DeleteDialog.TitleDel', this.#fqlOptions),
-         content: `<h3>${game.i18n.format('ForienQuestLog.DeleteDialog.HeaderDel', this.#fqlOptions)}</h3>` +
-          `<p>${game.i18n.localize(this.#fqlOptions.body)}</p>`,
+         title: game.i18n.format('AdventurersQuestLog.DeleteDialog.TitleDel', this.#aqlOptions),
+         content: `<h3>${game.i18n.format('AdventurersQuestLog.DeleteDialog.HeaderDel', this.#aqlOptions)}</h3>` +
+          `<p>${game.i18n.localize(this.#aqlOptions.body)}</p>`,
          buttons: {
             yes: {
                icon: '<i class="fas fa-trash"></i>',
-               label: game.i18n.localize('ForienQuestLog.DeleteDialog.Delete'),
-               callback: () => this.#fqlOptions.resolve(this.#fqlOptions.result)
+               label: game.i18n.localize('AdventurersQuestLog.DeleteDialog.Delete'),
+               callback: () => this.#aqlOptions.resolve(this.#aqlOptions.result)
             },
             no: {
                icon: '<i class="fas fa-times"></i>',
-               label: game.i18n.localize('ForienQuestLog.DeleteDialog.Cancel'),
-               callback: () => this.#fqlOptions.resolve(void 0)
+               label: game.i18n.localize('AdventurersQuestLog.DeleteDialog.Cancel'),
+               callback: () => this.#aqlOptions.resolve(void 0)
             }
          }
       };
@@ -238,44 +238,44 @@ class FQLDialogImpl extends foundry.appv1.api.Dialog
     */
    async close()
    {
-      this.#fqlOptions.resolve(void 0);
+      this.#aqlOptions.resolve(void 0);
       return super.close();
    }
 
    /**
-    * @returns {boolean} Returns {@link FQLDialogOptions.isQuestLog} from options.
+    * @returns {boolean} Returns {@link AQLDialogOptions.isQuestLog} from options.
     */
-   get fqlIsQuestLog() { return this.#fqlOptions.isQuestLog; }
+   get aqlIsQuestLog() { return this.#aqlOptions.isQuestLog; }
 
    /**
-    * @returns {string} Returns {@link FQLDialogOptions.questId} from options.
+    * @returns {string} Returns {@link AQLDialogOptions.questId} from options.
     */
-   get fqlQuestId() { return this.#fqlOptions.questId; }
+   get aqlQuestId() { return this.#aqlOptions.questId; }
 
    /**
-    * Updates the FQLDialogOptions when a dialog is already showing and a successive delete operation is initiated.
+    * Updates the AQLDialogOptions when a dialog is already showing and a successive delete operation is initiated.
     *
     * Resolves the currently cached Promise with undefined and cache a new Promise which is returned.
     *
-    * @param {FQLDialogOptions} options - The new options to set for Dialog rendering and success return value.
+    * @param {AQLDialogOptions} options - The new options to set for Dialog rendering and success return value.
     *
     * @returns {Promise<unknown>} The new Promise to await upon.
     */
-   updateFQLData(options)
+   updateAQLData(options)
    {
       // Resolve old promise with undefined
-      this.#fqlOptions.resolve(void 0);
+      this.#aqlOptions.resolve(void 0);
 
       // Set new options
-      this.#fqlOptions = options;
+      this.#aqlOptions = options;
 
-      // Create a new Promise that will store the resolve function in this FQLDialogImpl.
-      const promise = new Promise((resolve) => { this.#fqlOptions.resolve = resolve; });
+      // Create a new Promise that will store the resolve function in this AQLDialogImpl.
+      const promise = new Promise((resolve) => { this.#aqlOptions.resolve = resolve; });
 
       // Update title and content with new data.
-      this.data.title = game.i18n.format('ForienQuestLog.DeleteDialog.TitleDel', this.#fqlOptions);
-      this.data.content = `<h3>${game.i18n.format('ForienQuestLog.DeleteDialog.HeaderDel', this.#fqlOptions)}</h3>` +
-       `<p>${game.i18n.localize(this.#fqlOptions.body)}</p>`;
+      this.data.title = game.i18n.format('AdventurersQuestLog.DeleteDialog.TitleDel', this.#aqlOptions);
+      this.data.content = `<h3>${game.i18n.format('AdventurersQuestLog.DeleteDialog.HeaderDel', this.#aqlOptions)}</h3>` +
+       `<p>${game.i18n.localize(this.#aqlOptions.body)}</p>`;
 
       // Bring the dialog to top and render again.
       this.bringToTop();
@@ -288,7 +288,7 @@ class FQLDialogImpl extends foundry.appv1.api.Dialog
 }
 
 /**
- * @typedef FQLDialogOptions
+ * @typedef AQLDialogOptions
  *
  * @property {Function} [resolve] - The cached resolve function of the Dialog promise.
  *

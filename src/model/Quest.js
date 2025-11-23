@@ -336,7 +336,7 @@ export class Quest
    set name(value)
    {
       this.#name = typeof value === 'string' && value.length > 0 ? value :
-       game.i18n.localize('ForienQuestLog.API.QuestDB.Labels.NewQuest');
+       game.i18n.localize('AdventurersQuestLog.API.QuestDB.Labels.NewQuest');
    }
 
    /**
@@ -454,7 +454,7 @@ export class Quest
     */
    initData(data)
    {
-      this.name = data.name || game.i18n.localize('ForienQuestLog.API.QuestDB.Labels.NewQuest');
+      this.name = data.name || game.i18n.localize('AdventurersQuestLog.API.QuestDB.Labels.NewQuest');
 
       /**
        * @type {string}
@@ -652,7 +652,7 @@ export class Quest
       // Save Quest JSON, but also potentially update the backing JournalEntry folder name.
       const update = {
          name: typeof this.#name === 'string' && this.#name.length > 0 ? this.#name :
-          game.i18n.localize('ForienQuestLog.API.QuestDB.Labels.NewQuest'),
+          game.i18n.localize('AdventurersQuestLog.API.QuestDB.Labels.NewQuest'),
          flags: {
             [constants.moduleName]: { json: this.toJSON() }
          }
@@ -1097,7 +1097,7 @@ export class Task
  *
  * @property {boolean}  locked - Reward locked.
  *
- * @property {string}   uuidv4 - The FQL UUIDv4 / unique ID.
+ * @property {string}   uuidv4 - The AQL UUIDv4 / unique ID.
  */
 
 /**
@@ -1123,6 +1123,6 @@ export class Task
  *
  * @property {string}   state - Task state.
  *
- * @property {string}   uuidv4 - The FQL UUIDv4 / unique ID.
+ * @property {string}   uuidv4 - The AQL UUIDv4 / unique ID.
  */
 

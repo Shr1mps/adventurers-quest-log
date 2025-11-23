@@ -1,3 +1,3 @@
-export * from './FQLContextMenu.js';
-export * from './FQLDialog.js';
-export * from './FQLDocumentOwnershipConfig.js';
+export * from './AQLContextMenu.js';
+export * from './AQLDialog.js';
+export * from './AQLDocumentOwnershipConfig.js';

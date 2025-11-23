@@ -7,7 +7,7 @@ import {
 
 /**
  * Provides several general utility methods interacting with Foundry via UUID lookups to generating UUIDv4 internal
- * FQL IDs. There are also several general methods for Handlebars setup.
+ * AQL IDs. There are also several general methods for Handlebars setup.
  */
 export class Utils
 {
@@ -20,11 +20,11 @@ export class Utils
    }
 
    /**
-    * The hidden FQL quests folder name.
+    * The hidden AQL quests folder name.
     *
     * @type {string}
     */
-   static #questDirName = '_fql_quests';
+   static #questDirName = '_aql_quests';
 
    /**
     * Uses `navigator.clipboard` if available then falls back to `document.execCommand('copy')` if available to copy
@@ -38,7 +38,7 @@ export class Utils
    {
       if (typeof text !== 'string')
       {
-         throw new TypeError(`FQL copyTextToClipboard error: 'text' is not a string.`);
+         throw new TypeError(`AQL copyTextToClipboard error: 'text' is not a string.`);
       }
 
       let success = false;
@@ -143,11 +143,11 @@ export class Utils
    }
 
    /**
-    * A convenience method to return the module data object for FQL.
+    * A convenience method to return the module data object for AQL.
     *
-    * This is a scoped location where we can store any FQL data.
+    * This is a scoped location where we can store any AQL data.
     *
-    * @returns {object} The FQL module data object.
+    * @returns {object} The AQL module data object.
     */
    static getModuleData()
    {
@@ -202,7 +202,7 @@ export class Utils
 
          if (doc === null)
          {
-            ui.notifications.error(game.i18n.format('ForienQuestLog.API.Utils.Notifications.NoDocument', { uuid }));
+            ui.notifications.error(game.i18n.format('AdventurersQuestLog.API.Utils.Notifications.NoDocument', { uuid }));
             return null;
          }
 
@@ -210,7 +210,7 @@ export class Utils
 
          if (checkPerm && !doc.testUserPermission(game.user, CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER))
          {
-            ui.notifications.warn('ForienQuestLog.API.Utils.Notifications.NoPermission', { localize: true });
+            ui.notifications.warn('AdventurersQuestLog.API.Utils.Notifications.NoPermission', { localize: true });
             return null;
          }
 
@@ -218,7 +218,7 @@ export class Utils
       }
       catch (err)
       {
-         ui.notifications.error(game.i18n.format('ForienQuestLog.API.Utils.Notifications.NoDocument', { uuid }));
+         ui.notifications.error(game.i18n.format('AdventurersQuestLog.API.Utils.Notifications.NoDocument', { uuid }));
          console.error(err);
       }
 
@@ -304,19 +304,19 @@ export class Utils
    }
 
    /**
-    * Returns true if FQL is hidden from players. This will always return false if the user is a GM.
+    * Returns true if AQL is hidden from players. This will always return false if the user is a GM.
     *
-    * @returns {boolean} Is FQL hidden from players.
+    * @returns {boolean} Is AQL hidden from players.
     */
-   static isFQLHiddenFromPlayers()
+   static isAQLHiddenFromPlayers()
    {
       if (game.user.isGM) { return false; }
 
-      return game.settings.get(constants.moduleName, settings.hideFQLFromPlayers);
+      return game.settings.get(constants.moduleName, settings.hideAQLFromPlayers);
    }
 
    /**
-    * Sets an image based on boolean setting state for FQL macros.
+    * Sets an image based on boolean setting state for AQL macros.
     *
     * @param {string|string[]}   setting - Setting name.
     *
@@ -334,7 +334,7 @@ export class Utils
       {
          for (const currentSetting of fqlSettings)
          {
-            // Test if the FQL `macro-setting` flag value against the setting supplied.
+            // Test if the AQL `macro-setting` flag value against the setting supplied.
             const macroSetting = macroEntry.getFlag(constants.moduleName, 'macro-setting');
             if (macroSetting !== currentSetting) { continue; }
 
@@ -346,8 +346,8 @@ export class Utils
 
             // Pick the correct image for the current state.
             const img = typeof state === 'boolean' && state ?
-             `modules/forien-quest-log/assets/icons/macros/${currentSetting}On.png` :
-             `modules/forien-quest-log/assets/icons/macros/${currentSetting}Off.png`;
+             `modules/adventurers-quest-log/assets/icons/macros/${currentSetting}On.png` :
+             `modules/adventurers-quest-log/assets/icons/macros/${currentSetting}Off.png`;
 
             await macroEntry.update({ img }, { diff: false });
          }
@@ -368,8 +368,9 @@ export class Utils
     *
     * @returns {Promise<number|null>} The appId if rendered otherwise null.
     */
-   static async showSheetFromUUID(data, { permissionCheck = true, ...options } = {})
+   static async showSheetFromUUID(data, options = {})
    {
+      const { permissionCheck = true, ...opts } = options;
       const uuid = typeof data === 'string' ? data : data.uuid;
 
       try
@@ -378,13 +379,13 @@ export class Utils
 
          if (document === null)
          {
-            ui.notifications.error(game.i18n.format('ForienQuestLog.API.Utils.Notifications.NoDocument', { uuid }));
+            ui.notifications.error(game.i18n.format('AdventurersQuestLog.API.Utils.Notifications.NoDocument', { uuid }));
             return null;
          }
 
          if (permissionCheck && !document.testUserPermission(game.user, CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER))
          {
-            ui.notifications.warn('ForienQuestLog.API.Utils.Notifications.NoPermission', { localize: true });
+            ui.notifications.warn('AdventurersQuestLog.API.Utils.Notifications.NoPermission', { localize: true });
             return null;
          }
 
@@ -404,7 +405,7 @@ export class Utils
       }
       catch (err)
       {
-         ui.notifications.error(game.i18n.format('ForienQuestLog.API.Utils.Notifications.NoDocument', { uuid }));
+         ui.notifications.error(game.i18n.format('AdventurersQuestLog.API.Utils.Notifications.NoDocument', { uuid }));
          console.error(err);
          return null;
       }
@@ -423,7 +424,7 @@ export class Utils
          "templates/partials/quest-preview/playernotes.html"
       ];
 
-      templates = templates.map((t) => `modules/forien-quest-log/${t}`);
+      templates = templates.map((t) => `modules/adventurers-quest-log/${t}`);
       foundry.applications.handlebars.loadTemplates(templates);
    }
 
@@ -432,7 +433,7 @@ export class Utils
     */
    static registerHandlebarsHelpers()
    {
-      Handlebars.registerHelper('fql_format', (stringId, ...arrData) =>
+      Handlebars.registerHelper('aql_format', (stringId, ...arrData) =>
       {
          let objData;
          if (typeof arrData[0] === 'object')
@@ -452,7 +453,7 @@ export class Utils
     * Generates a UUID v4 compliant ID. This is used by Quest to attach a UUID to any data that isn't backed by a
     * FoundryVTT document. Right now that is particularly {@link Task}. All GUI interaction and storage in Quest data
     * that isn't based on an FVTT document must use a UUIDv4 to interact with this data. Lookups in Quest data must be
-    * by UUIDv4 to find an index in Quest data arrays before modifying data. FQL is potentially a multi-user module
+    * by UUIDv4 to find an index in Quest data arrays before modifying data. AQL is potentially a multi-user module
     * where many users could potentially be modifying Quest data that isn't backed by an FVTT document, so the Foundry
     * core DB won't be synching or resolving this data.
     *

@@ -1,7 +1,7 @@
 /**
  * Used to provides a fixed context menu used in QuestLog. With v13 it is handled by Foundry natively.
  */
-export class FQLContextMenu extends foundry.applications.ux.ContextMenu
+export class AQLContextMenu extends foundry.applications.ux.ContextMenu
 {
    /**
     * @inheritDoc

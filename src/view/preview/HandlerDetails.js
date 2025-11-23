@@ -4,7 +4,7 @@ import {
 
 import { Quest }     from '../../model/index.js';
 
-import { FQLDialog } from '../internal/index.js';
+import { AQLDialog } from '../internal/index.js';
 
 import {
    constants,
@@ -75,7 +75,7 @@ export class HandlerDetails
          {
             case 'name':
                quest.name = valueOut;
-               questPreview.options.title = game.i18n.format('ForienQuestLog.QuestPreview.Title', quest);
+               questPreview.options.title = game.i18n.format('AdventurersQuestLog.QuestPreview.Title', quest);
                break;
          }
          await questPreview.saveQuest(saveOptions);
@@ -147,7 +147,7 @@ export class HandlerDetails
             case 'giverName':
                quest.giverName = valueOut;
                if (typeof quest.giverData === 'object') { quest.giverData.name = valueOut; }
-               questPreview.options.title = game.i18n.format('ForienQuestLog.QuestPreview.Title', quest);
+               questPreview.options.title = game.i18n.format('AdventurersQuestLog.QuestPreview.Title', quest);
                await questPreview.saveQuest(saveOptions);
                break;
          }
@@ -182,7 +182,7 @@ export class HandlerDetails
          {
             quest.giver = 'abstract';
             quest.image = path;
-            quest.giverName = game.i18n.localize('ForienQuestLog.QuestPreview.Labels.CustomSource');
+            quest.giverName = game.i18n.localize('AdventurersQuestLog.QuestPreview.Labels.CustomSource');
             quest.giverData = await Quest.giverFromQuest(quest);
             delete quest.giverData.uuid;
 
@@ -225,7 +225,7 @@ export class HandlerDetails
       }
       catch (err)
       {
-         console.warn(`ForienQuestLog HandlerDetails.questGiverDropDocument warning: failed to parse data transfer`);
+         console.warn(`AdventurersQuestLog HandlerDetails.questGiverDropDocument warning: failed to parse data transfer`);
       }
 
       const uuid = Utils.getUUID(data, ['Actor', 'Item', 'JournalEntry']);
@@ -241,7 +241,7 @@ export class HandlerDetails
          }
          else
          {
-            ui.notifications.warn(game.i18n.format('ForienQuestLog.QuestPreview.Notifications.BadUUID', { uuid }));
+            ui.notifications.warn(game.i18n.format('AdventurersQuestLog.QuestPreview.Notifications.BadUUID', { uuid }));
          }
       }
       else
@@ -250,7 +250,7 @@ export class HandlerDetails
          if (typeof data?.uuid === 'string' &&
           data.uuid.startsWith('Actor') && (data.uuid.match(/\./g) || []).length > 1)
          {
-            ui.notifications.warn(game.i18n.localize('ForienQuestLog.QuestPreview.Notifications.WrongDocType'));
+            ui.notifications.warn(game.i18n.localize('AdventurersQuestLog.QuestPreview.Notifications.WrongDocType'));
          }
       }
    }
@@ -387,7 +387,7 @@ export class HandlerDetails
    /**
     * Creates a new abstract reward if the input entry is successful or contains data and a focus out event occurs.
     *
-    * The module setting: {@link FQLSettings.defaultAbstractRewardImage} stores the default abstract reward image.
+    * The module setting: {@link AQLSettings.defaultAbstractRewardImage} stores the default abstract reward image.
     *
     * @param {JQuery.ClickEvent} event - JQuery.ClickEvent
     *
@@ -451,7 +451,7 @@ export class HandlerDetails
       const name = target.data('reward-name');
 
       // Await a semi-modal dialog.
-      const result = await FQLDialog.confirmDeleteReward({ name, result: uuidv4, questId: quest.id });
+      const result = await AQLDialog.confirmDeleteReward({ name, result: uuidv4, questId: quest.id });
       if (result)
       {
          quest.removeReward(result);
@@ -478,7 +478,7 @@ export class HandlerDetails
           * @type {RewardDropData}
           */
          const dataTransfer = {
-            _fqlData: {
+            _aqlData: {
                type: 'reward',
                questId: quest.id,
                uuidv4: data.uuidv4,
@@ -548,7 +548,7 @@ export class HandlerDetails
          Socket.refreshQuestPreview({ questId: quest.id });
       }
 
-      if (data?._fqlData !== void 0) { return; }
+      if (data?._aqlData !== void 0) { return; }
 
       if (data?.type === 'Actor')
       {
@@ -564,7 +564,7 @@ export class HandlerDetails
             }
             else
             {
-               ui.notifications.warn(game.i18n.format('ForienQuestLog.QuestPreview.Notifications.BadUUID', { uuid }));
+               ui.notifications.warn(game.i18n.format('AdventurersQuestLog.QuestPreview.Notifications.BadUUID', { uuid }));
             }
          }
       }
@@ -582,7 +582,7 @@ export class HandlerDetails
             }
             else
             {
-               ui.notifications.warn(game.i18n.format('ForienQuestLog.QuestPreview.Notifications.BadUUID', { uuid }));
+               ui.notifications.warn(game.i18n.format('AdventurersQuestLog.QuestPreview.Notifications.BadUUID', { uuid }));
             }
          }
          else
@@ -591,7 +591,7 @@ export class HandlerDetails
             if (typeof data?.uuid === 'string' &&
              data.uuid.startsWith('Actor') && (data.uuid.match(/\./g) || []).length > 1)
             {
-               ui.notifications.warn(game.i18n.localize('ForienQuestLog.QuestPreview.Notifications.WrongItemType'));
+               ui.notifications.warn(game.i18n.localize('AdventurersQuestLog.QuestPreview.Notifications.WrongItemType'));
             }
          }
       }
@@ -869,7 +869,7 @@ export class HandlerDetails
       const uuidv4 = target.data('uuidv4');
       const name = target.data('task-name');
 
-      const result = await FQLDialog.confirmDeleteTask({ name, result: uuidv4, questId: quest.id });
+      const result = await AQLDialog.confirmDeleteTask({ name, result: uuidv4, questId: quest.id });
       if (result)
       {
          quest.removeTask(result);
@@ -1050,10 +1050,10 @@ export class HandlerDetails
 }
 
 /**
- * @typedef {object} FQLDropData An object attached to drop data transfer which describes the FQL reward item and who
+ * @typedef {object} AQLDropData An object attached to drop data transfer which describes the AQL reward item and who
  *                               is dropping it into an actor sheet.
  *
- * @property {string} type - The type of FQL drop data; one of: ['reward']
+ * @property {string} type - The type of AQL drop data; one of: ['reward']
  *
  * @property {string} questId - The Quest ID
  *
@@ -1067,7 +1067,7 @@ export class HandlerDetails
 /**
  * @typedef {object} RewardDropData
  *
- * @property {FQLDropData} _fqlData - FQL drop data used to remove the reward from a quest.
+ * @property {AQLDropData} _aqlData - AQL drop data used to remove the reward from a quest.
  *
  * @property {string}      type - Type of document.
  *
