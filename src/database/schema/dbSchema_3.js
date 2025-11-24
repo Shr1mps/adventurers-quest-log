@@ -1,13 +1,3 @@
-import { DBMigration }  from '../DBMigration.js';
-
-import {
-   FVTTCompat,
-   Utils }              from '../../src/control/index.js';
-
-import { Quest }        from '../../src/model/index.js';
-
-import { constants }    from '../../src/model/constants.js';
-
 /**
  * Performs DB migration for v10 and all systems updating cached images / names of quest givers and reward items.
  *

@@ -2,13 +2,13 @@ import { DBMigration }  from '../DBMigration.js';
 
 import {
    FVTTCompat,
-   Utils }              from '../../src/control/index.js';
+   Utils }              from '../../control/index.js';
 
-import { Quest }        from '../../src/model/index.js';
+import { Quest }        from '../../model/index.js';
 
 import {
    constants,
-   questStatus }        from '../../src/model/constants.js';
+   questStatus }        from '../../model/constants.js';
 
 /**
  * Performs DB migration from schema 1 to 2.

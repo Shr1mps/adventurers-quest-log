@@ -12,7 +12,7 @@ import { Quest }        from '../../model/index.js';
 
 import { QuestPreview } from '../../view/index.js';
 
-import { DBMigration }  from '../../../database/DBMigration.js';
+import { DBMigration }  from '../../database/DBMigration.js';
 
 import {
    constants,

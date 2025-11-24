@@ -2,9 +2,9 @@
 
 import {
    Socket,
-   Utils }           from '../src/control/index.js';
+   Utils }           from '../control/index.js';
 
-import { constants } from '../src/model/constants.js';
+import { constants } from '../model/constants.js';
 
 import {
    dbSchema_1,
