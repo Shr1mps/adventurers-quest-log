@@ -55,7 +55,7 @@ export class QuestLog extends HandlebarsApplicationMixin(ApplicationV2)
 
    static PARTS = {
       log: {
-         template: "modules/adventurers-quest-log/templates/quest-log.html",
+         template: `modules/${constants.moduleName}/templates/quest-log.html`,
          scrollable: [".quest-list"]
       }
    };

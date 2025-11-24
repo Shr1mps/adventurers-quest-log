@@ -346,8 +346,8 @@ export class Utils
 
             // Pick the correct image for the current state.
             const img = typeof state === 'boolean' && state ?
-             `modules/adventurers-quest-log/assets/icons/macros/${currentSetting}On.png` :
-             `modules/adventurers-quest-log/assets/icons/macros/${currentSetting}Off.png`;
+             `modules/${constants.moduleName}/assets/icons/macros/${currentSetting}On.png` :
+             `modules/${constants.moduleName}/assets/icons/macros/${currentSetting}Off.png`;
 
             await macroEntry.update({ img }, { diff: false });
          }
@@ -424,7 +424,7 @@ export class Utils
          "templates/partials/quest-preview/playernotes.html"
       ];
 
-      templates = templates.map((t) => `modules/adventurers-quest-log/${t}`);
+      templates = templates.map((t) => `modules/${constants.moduleName}/${t}`);
       foundry.applications.handlebars.loadTemplates(templates);
    }
 

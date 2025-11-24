@@ -37,7 +37,7 @@ export class Socket
     *
     * @type {string}
     */
-   static #eventName = 'module.adventurers-quest-log';
+   static #eventName = `module.${constants.moduleName}`;
 
    /**
     * Defines the different message types that AQL sends over `game.socket`.
